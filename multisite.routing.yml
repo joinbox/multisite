@@ -1,0 +1,23 @@
+multisite.admin:
+  path: '/admin/config/multisite'
+  requirements:
+    _permission: 'administer multisite'
+
+multisite.region_selector_redirect_controller_redirect:
+  path: '/multisite/redirect/{regionId}/{redirectUrl}'
+  defaults:
+    _controller: '\Drupal\multisite\Controller\RegionSelectorRedirectController::redirectToRegion'
+    _title: 'redirect'
+    redirectUrl: '/'
+  options:
+    no_cache: TRUE
+  requirements:
+    _permission: 'access content'
+
+multisite.region.overlay:
+  path: '/multisite/regionoverlay/{encodedUrl}'
+  defaults:
+    _title: 'Region Overlay'
+    _controller: '\Drupal\multisite\Controller\RegionOverlay::generateOverlay'
+  requirements:
+    _permission: 'access content'

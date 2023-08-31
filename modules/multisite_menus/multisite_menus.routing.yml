@@ -1,0 +1,7 @@
+multisite_menus.settings_form:
+  path: '/admin/config/system/multisite-menus'
+  defaults:
+    _title: 'Define Menus'
+    _form: 'Drupal\multisite_menus\Form\MultisiteSettingsForm'
+  requirements:
+    _permission: 'administer multisite menus'

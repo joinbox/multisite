@@ -1,0 +1,4 @@
+administer multisite menus:
+  title: 'Administer multisite menus'
+  description: 'Administer multisite menus'
+  restrict access: true

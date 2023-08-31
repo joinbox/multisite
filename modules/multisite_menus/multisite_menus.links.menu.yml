@@ -1,0 +1,6 @@
+multisite_menus.settings_form:
+  title: "Multisite Menus"
+  description: Configure multisite_menus.
+  parent: multisite.admin
+  route_name: multisite_menus.settings_form
+  weight: 10

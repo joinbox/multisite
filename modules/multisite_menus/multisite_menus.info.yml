@@ -1,0 +1,8 @@
+name: "Multisite Menus"
+type: module
+description: Enables Menus per Domain
+package: Joinbox
+core_version_requirement: ^9 || ^10
+dependencies:
+  - custom:multisite
+  - drupal:twig_tweak

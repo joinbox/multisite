@@ -1,0 +1,19 @@
+{#
+/**
+ * @file
+ * Default theme implementation for the multisite region / language selector.
+ *
+ * Available variables:
+ * - continents
+ * - preprocessor.autocompleteCountries
+ *
+ * @see template_preprocess_multisite_region_selector()
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% include '@components/region-overlay/c-region-overlay-content.html.twig' with {
+    continents:  continents,
+    countryList: preprocessor.countryList,
+} %}

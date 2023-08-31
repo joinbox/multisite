@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * We have to generate our own href alternates
+ *
+ * @param $variables
+ *
+ * @return void
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ */
+function multisite_preprocess_html(&$variables) {
+  /** @var \Drupal\bystronic_helper\BystronicHelperService $bystronicHelperService */
+  $bystronicHelperService = \Drupal::service('bystronic_helper.bystronic_helper_service');
+
+  //generate hreflangs for the following routes / types
+  if ($entity = $bystronicHelperService->getCurrentEntityWithRouteMatch()) {
+    /** @var \Drupal\multisite\HreflangGenerator $hreflangGenerator */
+    $hreflangGenerator = \Drupal::service('multisite.hreflang.generator');
+    $variables['page']['#attached']['html_head_link'] = $hreflangGenerator->getHreflangs($entity);
+  }
+}
+
+/**
+ * Register the overlay theme
+ */
+function multisite_theme() {
+  return [
+    'region_selector' => [
+      'variables' => [
+        'continents' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Generate the necessary data when installing the module
+ *
+ * @return void
+ * @throws Exception
+ */
+function multisite_install() {
+  /* @var $dataGenerator \Drupal\multisite\DataGeneratorService */
+  $dataGenerator = \Drupal::service('multisite.data_generator');
+  $dataGenerator->loadAllData();
+}

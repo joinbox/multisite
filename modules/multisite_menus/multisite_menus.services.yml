@@ -1,0 +1,9 @@
+services:
+  multisite_menus.resolver:
+    class: Drupal\multisite_menus\MultisiteMenuResolver
+
+  multisite_menus.twig_extension:
+    class: Drupal\multisite_menus\TwigExtension\MultisiteMenuTwigExtension
+    arguments: [ '@multisite_menus.resolver', '@multisite.domain_resolver' ]
+    tags:
+      - { name: twig.extension }

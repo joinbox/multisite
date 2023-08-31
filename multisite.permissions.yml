@@ -1,0 +1,4 @@
+administer multisite:
+  title: 'Administer multisite'
+  description: 'Administer multisite'
+  restrict access: true

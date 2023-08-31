@@ -1,0 +1,6 @@
+multisite.admin:
+  title: Joinbox Multisite
+  route_name: multisite.admin
+  parent: system.admin_config
+  description: 'Multisite configuration'
+  weight: 0

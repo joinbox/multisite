@@ -1,0 +1,55 @@
+services:
+  multisite.domain.redirect:
+    class: Drupal\multisite\DomainRedirectMiddleware
+    arguments: [ '@multisite.domain_resolver', '@multisite.user.detection', '@multisite.country_storage' ]
+    tags:
+      - { name: http_middleware, priority: 98 }
+  multisite.domain.validation:
+    class: Drupal\multisite\DomainValidationMiddleware
+    arguments: [ '@multisite.domain_resolver', '@multisite.language_manager']
+    tags:
+      - { name: http_middleware, priority: 97 }
+  multisite.country.detection.event.subscriber:
+    class: Drupal\multisite\EventSubscriber\CountryDetectionEventSubscriber
+    arguments: [ '@multisite.country_storage', '@multisite.user.detection' ]
+    tags:
+      - { name: event_subscriber }
+  multisite.country_storage:
+    class: Drupal\multisite\CountryCookieStorage
+  multisite.domain_resolver:
+    class: Drupal\multisite\DomainResolverService
+    arguments: [ '@domain.negotiator' ]
+  multisite.user.detection:
+    class: Drupal\multisite\UserDetection
+  multisite.data_generator:
+    class: Drupal\multisite\DataGeneratorService
+    arguments: [ ]
+  multisite.access_manager:
+    class: Drupal\multisite\CustomDomainAccessManager
+    arguments: [ '@domain_access.manager' ]
+  multisite.hreflang.generator:
+    class: Drupal\multisite\HreflangGenerator
+    arguments: [ '@multisite.access_manager', '@cache.default', '@multisite.domain_resolver', '@multisite.language_manager' ]
+  multisite.language_manager:
+    class: Drupal\multisite\LanguageManager
+  multisite.twig_extension:
+    class: Drupal\multisite\TwigExtension\MultisiteTwigExtension
+    arguments: ['@multisite.domain_resolver', '@multisite.country_storage']
+    tags:
+      - { name: twig.extension }
+  logger.channel.multisite:
+    parent: logger.channel_base
+    arguments: [ 'multisite' ]
+  multisite.page_cache_request_policy.is_base_path:
+    class: Drupal\multisite\PageCache\DenyBasePath
+    tags:
+      - { name: page_cache_request_policy }
+  multisite.page_cache_request_policy.default_policy_extend:
+    class: Drupal\multisite\PageCache\MultisiteRequestPolicy
+    arguments: ['@session_configuration']
+    tags:
+      - { name: service_collector, tag: page_cache_request_policy, call: addPolicy}
+  default_request_policy.decorator:
+    class: Drupal\multisite\PageCache\MultisiteRequestPolicy
+    decorates: page_cache_request_policy
+    arguments: ['@session_configuration']

@@ -1,0 +1,9 @@
+name: Multisite
+type: module
+description: Multisite capabilities to resolve domains, countries and languages.
+package: Joinbox
+core_version_requirement: ^9 || ^10
+dependencies:
+  - drupal:domain
+  - drupal:smart_ip
+  - drupal:country_path

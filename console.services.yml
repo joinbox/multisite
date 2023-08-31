@@ -1,0 +1,11 @@
+services:
+  multisite.multisite_generatedata:
+    class: Drupal\multisite\Command\GenerateCommand
+    arguments: ['@multisite.data_generator']
+    tags:
+      - { name: drupal.command }
+  multisite.multisite_setallda:
+    class: Drupal\multisite\Command\SetAllDACommand
+    arguments: []
+    tags:
+      - { name: drupal.command }
